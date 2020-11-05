@@ -37,17 +37,17 @@ namespace NestingList
             buttonOk.DialogResult = DialogResult.OK;
             buttonCancel.DialogResult = DialogResult.Cancel;
 
-            label.SetBounds(9, 20, 372, 13);
-            textBox.SetBounds(12, 36, 372, 20);
-            buttonOk.SetBounds(228, 72, 75, 23);
-            buttonCancel.SetBounds(309, 72, 75, 23);
+            label.SetBounds(9, 15, 332, 13);
+            textBox.SetBounds(12, 31, 332, 30);
+            buttonOk.SetBounds(188, 72, 75, 28);
+            buttonCancel.SetBounds(269, 72, 75, 28);
 
             label.AutoSize = true;
             textBox.Anchor = textBox.Anchor | AnchorStyles.Right;
             buttonOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
 
-            form.ClientSize = new Size(396, 107);
+            form.ClientSize = new Size(356, 115);
             form.Controls.AddRange(new Control[] { label, textBox, buttonOk, buttonCancel });
             form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
             form.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -56,6 +56,7 @@ namespace NestingList
             form.MaximizeBox = false;
             form.AcceptButton = buttonOk;
             form.CancelButton = buttonCancel;
+            textBox.SelectAll();
 
             DialogResult dialogResult = form.ShowDialog();
             value = textBox.Text;
@@ -67,7 +68,7 @@ namespace NestingList
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
-            openFileDialog1.InitialDirectory = "c:\\";
+            openFileDialog1.InitialDirectory = "c:\\tpacad\\nestcad\\";
             openFileDialog1.Title = "Pasirinkite";
             openFileDialog1.Filter = "TPA nesting files (*.ncad)|*.ncad";
             openFileDialog1.FilterIndex = 0;
@@ -79,26 +80,24 @@ namespace NestingList
                 string value = "1";
                 if (InputBox("Multiply", "Quantity:", ref value) == DialogResult.OK)
                 {
-                    //MessageBox.Show(selectedFileName + ": " + value);
 
                     // https://stackoverflow.com/questions/642293/how-do-i-read-and-parse-an-xml-file-in-c
+
                     XmlDocument doc = new XmlDocument();
                     doc.Load(selectedFileName);
 
-                    /* foreach (XmlNode node in doc.DocumentElement.ChildNodes)
-                    {
-                        string text = node.Name; //  .InnerText; //or loop through its children as well
-                        MessageBox.Show(text);
-                    } */
-
                     var xml = XDocument.Load(@selectedFileName);
-                    var query = from c in xml.Root.Descendants("rows")
-                                select c.Element("row").Attribute("name").Value;
-
-
-                    foreach (string item in query)
+                    var items = xml.Descendants("row");
+                    foreach (var item in items)
                     {
-                        MessageBox.Show(item);
+                        string name = item.Attribute("name").Value;
+                        string height = item.Attribute("dimh").Value;
+                        string width = item.Attribute("diml").Value;
+                        string thick = item.Attribute("dims").Value;
+                        string sheet = item.Attribute("en").Value;
+                        string qty = item.Attribute("items").Value;
+                        var row = new ListViewItem(new[] { name, height, width, thick, qty });
+                        PartsList.Items.Add(row);
                     }
                 }
             }
