@@ -63,7 +63,7 @@ namespace NestingList
             return dialogResult;
         }
 
-
+        private XDocument xml;
         private void btnImport_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -81,7 +81,7 @@ namespace NestingList
                 if (InputBox("Multiply", "Quantity:", ref value) == DialogResult.OK)
                 {
 
-                    var xml = XDocument.Load(selectedFileName);
+                    xml = XDocument.Load(selectedFileName);
                     var sheets = xml.Descendants("sheet");
                     List<string> materials = new List<string>();
                     foreach (var sheet in sheets)
@@ -121,6 +121,18 @@ namespace NestingList
         {
             if (PartsList.SelectedIndices.Count > 0)
             PartsList.Items.RemoveAt(PartsList.SelectedIndices[0]);
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDlg = new SaveFileDialog();
+            saveFileDlg.Filter = "TPA nesting files (*.ncad)|*.ncad";
+
+            if (saveFileDlg.ShowDialog() == DialogResult.OK)
+            {
+                xml.Save(saveFileDlg.FileName);
+                MainForm.ActiveForm.Text = "TPA nesting list - " + saveFileDlg.FileName;
+            }
         }
     }
 }
