@@ -38,7 +38,7 @@ namespace NestingList
             buttonCancel.DialogResult = DialogResult.Cancel;
 
             label.SetBounds(9, 15, 332, 13);
-            textBox.SetBounds(12, 31, 332, 30);
+            textBox.SetBounds(12, 31, 332, 36);
             buttonOk.SetBounds(188, 72, 75, 28);
             buttonCancel.SetBounds(269, 72, 75, 28);
 
@@ -81,12 +81,15 @@ namespace NestingList
                 if (InputBox("Multiply", "Quantity:", ref value) == DialogResult.OK)
                 {
 
-                    // https://stackoverflow.com/questions/642293/how-do-i-read-and-parse-an-xml-file-in-c
+                    var xml = XDocument.Load(selectedFileName);
+                    var sheets = xml.Descendants("sheet");
+                    List<string> materials = new List<string>();
+                    foreach (var sheet in sheets)
+                    {
+                        materials.Add(sheet.Attribute("name").Value);
+                    }
+                    Console.WriteLine("Sheets: " + materials.Count());
 
-                    XmlDocument doc = new XmlDocument();
-                    doc.Load(selectedFileName);
-
-                    var xml = XDocument.Load(@selectedFileName);
                     var items = xml.Descendants("row");
                     foreach (var item in items)
                     {
@@ -94,13 +97,30 @@ namespace NestingList
                         string height = item.Attribute("dimh").Value;
                         string width = item.Attribute("diml").Value;
                         string thick = item.Attribute("dims").Value;
-                        string sheet = item.Attribute("en").Value;
-                        string qty = item.Attribute("items").Value;
-                        var row = new ListViewItem(new[] { name, height, width, thick, qty });
+                        string en = item.Attribute("en").Value;
+
+                        int sheet = 1; Int32.TryParse(en, out sheet);
+                        string material = materials[sheet-1];
+
+                        int qty = 1;
+                        Int32.TryParse(item.Attribute("items").Value, out qty);
+
+                        int multiply = 1;
+                        Int32.TryParse(value, out multiply);
+
+                        qty = qty * multiply;
+
+                        var row = new ListViewItem(new[] { name, height, width, thick, qty.ToString(), material });
                         PartsList.Items.Add(row);
                     }
                 }
             }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (PartsList.SelectedIndices.Count > 0)
+            PartsList.Items.RemoveAt(PartsList.SelectedIndices[0]);
         }
     }
 }
