@@ -66,17 +66,17 @@ namespace NestingList
         private XDocument xml;
         private void btnImport_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            OpenFileDialog openFileDlg = new OpenFileDialog();
 
-            openFileDialog1.InitialDirectory = "c:\\tpacad\\nestcad\\";
-            openFileDialog1.Title = "Pasirinkite";
-            openFileDialog1.Filter = "TPA nesting files (*.ncad)|*.ncad";
-            openFileDialog1.FilterIndex = 0;
-            openFileDialog1.RestoreDirectory = true;
+            openFileDlg.InitialDirectory = "c:\\tpacad\\nestcad\\";
+            openFileDlg.Title = "Pasirinkite";
+            openFileDlg.Filter = "TPA nesting projects (*.ncad)|*.ncad";
+            openFileDlg.FilterIndex = 0;
+            openFileDlg.RestoreDirectory = true;
 
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            if (openFileDlg.ShowDialog() == DialogResult.OK)
             {
-                string selectedFileName = openFileDialog1.FileName;
+                string selectedFileName = openFileDlg.FileName;
                 string value = "1";
                 if (InputBox("Multiply", "Quantity:", ref value) == DialogResult.OK)
                 {
@@ -88,7 +88,7 @@ namespace NestingList
                     {
                         materials.Add(sheet.Attribute("name").Value);
                     }
-                    Console.WriteLine("Sheets: " + materials.Count());
+                    //Console.WriteLine("Sheets: " + materials.Count());
 
                     var items = xml.Descendants("row");
                     foreach (var item in items)
@@ -126,13 +126,18 @@ namespace NestingList
         private void btnSave_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDlg = new SaveFileDialog();
-            saveFileDlg.Filter = "TPA nesting files (*.ncad)|*.ncad";
+            saveFileDlg.Filter = "TPA nesting project (*.ncad)|*.ncad";
 
             if (saveFileDlg.ShowDialog() == DialogResult.OK)
             {
                 xml.Save(saveFileDlg.FileName);
                 MainForm.ActiveForm.Text = "TPA nesting list - " + saveFileDlg.FileName;
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
