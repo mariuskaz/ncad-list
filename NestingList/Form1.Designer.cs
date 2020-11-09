@@ -67,7 +67,7 @@
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "Name";
+            this.columnHeader1.Text = "Part number";
             this.columnHeader1.Width = 300;
             // 
             // columnHeader2
@@ -150,7 +150,7 @@
             this.Controls.Add(this.PartsList);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
-            this.Text = "TPA nesting list - New project";
+            this.Text = "TPA nesting list - New project file";
             this.ResumeLayout(false);
 
         }

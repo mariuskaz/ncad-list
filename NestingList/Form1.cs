@@ -70,7 +70,7 @@ namespace NestingList
 
             openFileDlg.InitialDirectory = "c:\\tpacad\\nestcad\\";
             openFileDlg.Title = "Pasirinkite";
-            openFileDlg.Filter = "TPA nesting projects (*.ncad)|*.ncad";
+            openFileDlg.Filter = "Nesting TpaCAD files (*.ncad)|*.ncad";
             openFileDlg.FilterIndex = 0;
             openFileDlg.RestoreDirectory = true;
 
@@ -88,14 +88,13 @@ namespace NestingList
                     {
                         materials.Add(sheet.Attribute("name").Value);
                     }
-                    //Console.WriteLine("Sheets: " + materials.Count());
 
                     var items = xml.Descendants("row");
                     foreach (var item in items)
                     {
                         string name = item.Attribute("name").Value;
                         string height = item.Attribute("dimh").Value;
-                        string width = item.Attribute("diml").Value;
+                        string length = item.Attribute("diml").Value;
                         string thick = item.Attribute("dims").Value;
                         string en = item.Attribute("en").Value;
 
@@ -110,7 +109,7 @@ namespace NestingList
 
                         qty = qty * multiply;
 
-                        var row = new ListViewItem(new[] { name, height, width, thick, qty.ToString(), material });
+                        var row = new ListViewItem(new[] { name, length, height, thick, qty.ToString(), material });
                         PartsList.Items.Add(row);
                     }
                 }
@@ -126,7 +125,7 @@ namespace NestingList
         private void btnSave_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDlg = new SaveFileDialog();
-            saveFileDlg.Filter = "TPA nesting project (*.ncad)|*.ncad";
+            saveFileDlg.Filter = "Nesting TpaCAD project (*.ncad)|*.ncad";
 
             if (saveFileDlg.ShowDialog() == DialogResult.OK)
             {
