@@ -63,14 +63,14 @@ namespace NestingList
             return dialogResult;
         }
 
-        private XDocument xml;
+        //private XDocument xml;
         private void btnImport_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDlg = new OpenFileDialog();
 
             openFileDlg.InitialDirectory = "c:\\tpacad\\nestcad\\";
             openFileDlg.Title = "Pasirinkite";
-            openFileDlg.Filter = "Nesting TpaCAD files (*.ncad)|*.ncad";
+            openFileDlg.Filter = "Nesting TpaCAD (*.ncad)|*.ncad";
             openFileDlg.FilterIndex = 0;
             openFileDlg.RestoreDirectory = true;
 
@@ -81,14 +81,7 @@ namespace NestingList
                 if (InputBox("Multiply", "Quantity:", ref value) == DialogResult.OK)
                 {
 
-                    xml = XDocument.Load(selectedFileName);
-                    var sheets = xml.Descendants("sheet");
-                    List<string> materials = new List<string>();
-                    foreach (var sheet in sheets)
-                    {
-                        materials.Add(sheet.Attribute("name").Value);
-                    }
-
+                    var xml = XDocument.Load(selectedFileName);
                     var items = xml.Descendants("row");
                     foreach (var item in items)
                     {
@@ -96,10 +89,11 @@ namespace NestingList
                         string height = item.Attribute("dimh").Value;
                         string length = item.Attribute("diml").Value;
                         string thick = item.Attribute("dims").Value;
-                        string en = item.Attribute("en").Value;
-
-                        int sheet = 1; Int32.TryParse(en, out sheet);
-                        string material = materials[sheet-1];
+                        string material = "Generic";
+                        if (item.Attribute("material") != null)
+                        {
+                            material = item.Attribute("material").Value;
+                        }
 
                         int qty = 1;
                         Int32.TryParse(item.Attribute("items").Value, out qty);
@@ -111,6 +105,7 @@ namespace NestingList
 
                         var row = new ListViewItem(new[] { name, length, height, thick, qty.ToString(), material });
                         PartsList.Items.Add(row);
+
                     }
                 }
             }
@@ -119,24 +114,78 @@ namespace NestingList
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (PartsList.SelectedIndices.Count > 0)
-            PartsList.Items.RemoveAt(PartsList.SelectedIndices[0]);
+            {
+                foreach (int item in PartsList.SelectedIndices)
+                {
+                    PartsList.Items.RemoveAt(PartsList.SelectedIndices[0]);
+                }
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDlg = new SaveFileDialog();
-            saveFileDlg.Filter = "Nesting TpaCAD project (*.ncad)|*.ncad";
+            saveFileDlg.Filter = "Nesting TpaCAD (*.ncad)|*.ncad";
 
             if (saveFileDlg.ShowDialog() == DialogResult.OK)
             {
-                xml.Save(saveFileDlg.FileName);
-                MainForm.ActiveForm.Text = "TPA nesting list - " + saveFileDlg.FileName;
+
+                String spc = System.IO.Path.GetFileName(saveFileDlg.FileName).Replace(".ncad","");
+                String material = PartsList.Items[0].SubItems[5].Text;
+                String thick = PartsList.Items[0].SubItems[3].Text;
+
+                String xml = $@"<?xml version='1.0' encoding='UTF-8'?>
+                <update version='1.0'>
+                  <params>
+                    <param name='refOrder' value='{spc}' />
+                    <param name='refProduct' value='{material}' />
+                  </params>
+                  <sheets>
+                    <sheet en='1' name='Sheet_1' diml='2800' dimh='2070' dims='{thick}' items='100' type='0' grain='0' />
+                  </sheets>
+                  <rows>
+                  </rows>
+                </update>";
+
+                XDocument doc = XDocument.Parse(xml);
+                var rows = doc.Descendants("rows").First();
+                foreach (ListViewItem item in PartsList.Items)
+                {
+                    var row = new XElement("row",
+                        new XAttribute("en","1"),
+                        new XAttribute("name", item.SubItems[0].Text),
+                        new XAttribute("diml", item.SubItems[1].Text),
+                        new XAttribute("dimh", item.SubItems[2].Text),
+                        new XAttribute("dims", item.SubItems[3].Text),
+                        new XAttribute("items", item.SubItems[4].Text),
+                        new XAttribute("material", item.SubItems[5].Text)
+                    );
+                    rows.Add(row);
+                }
+                doc.Save(saveFileDlg.FileName);
+                MainForm.ActiveForm.Text = "Nesting List - " + saveFileDlg.FileName;
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void PartsList_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete && PartsList.SelectedIndices.Count > 0)
+            {
+                foreach (int item in PartsList.SelectedIndices)
+                {
+                    PartsList.Items.RemoveAt(PartsList.SelectedIndices[0]);
+                }
+            }
+        }
+
+        private void PartsList_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            //Console.WriteLine("column" + e.Column.ToString());
         }
     }
 }

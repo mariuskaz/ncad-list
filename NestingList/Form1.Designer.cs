@@ -64,6 +64,8 @@
             this.PartsList.TabIndex = 0;
             this.PartsList.UseCompatibleStateImageBehavior = false;
             this.PartsList.View = System.Windows.Forms.View.Details;
+            this.PartsList.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.PartsList_ColumnClick);
+            this.PartsList.KeyUp += new System.Windows.Forms.KeyEventHandler(this.PartsList_KeyUp);
             // 
             // columnHeader1
             // 
@@ -73,17 +75,17 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "Height";
-            this.columnHeader2.Width = 100;
+            this.columnHeader2.Width = 80;
             // 
             // columnHeader3
             // 
             this.columnHeader3.Text = "Width";
-            this.columnHeader3.Width = 100;
+            this.columnHeader3.Width = 80;
             // 
             // columnHeader4
             // 
             this.columnHeader4.Text = "Thickness";
-            this.columnHeader4.Width = 100;
+            this.columnHeader4.Width = 80;
             // 
             // columnHeader5
             // 
@@ -92,7 +94,7 @@
             // columnHeader6
             // 
             this.columnHeader6.Text = "Material";
-            this.columnHeader6.Width = 300;
+            this.columnHeader6.Width = 360;
             // 
             // btnImport
             // 
@@ -123,7 +125,7 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(80, 28);
             this.btnSave.TabIndex = 7;
-            this.btnSave.Text = "Save";
+            this.btnSave.Text = "Save As...";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -150,7 +152,7 @@
             this.Controls.Add(this.PartsList);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
-            this.Text = "TPA nesting list - New project file";
+            this.Text = "Nesting List - New project";
             this.ResumeLayout(false);
 
         }
