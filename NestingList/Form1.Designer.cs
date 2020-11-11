@@ -40,6 +40,7 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.chkGrain = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // PartsList
@@ -140,11 +141,22 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // chkGrain
+            // 
+            this.chkGrain.AutoSize = true;
+            this.chkGrain.Location = new System.Drawing.Point(683, 530);
+            this.chkGrain.Name = "chkGrain";
+            this.chkGrain.Size = new System.Drawing.Size(124, 17);
+            this.chkGrain.TabIndex = 9;
+            this.chkGrain.Text = "Material grain texture";
+            this.chkGrain.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 573);
+            this.Controls.Add(this.chkGrain);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnDelete);
@@ -154,6 +166,7 @@
             this.Name = "MainForm";
             this.Text = "Nesting List - New project";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -170,6 +183,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.CheckBox chkGrain;
     }
 }
 

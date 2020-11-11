@@ -63,11 +63,9 @@ namespace NestingList
             return dialogResult;
         }
 
-        //private XDocument xml;
         private void btnImport_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDlg = new OpenFileDialog();
-
             openFileDlg.InitialDirectory = "c:\\tpacad\\nestcad\\";
             openFileDlg.Title = "Pasirinkite";
             openFileDlg.Filter = "Nesting TpaCAD (*.ncad)|*.ncad";
@@ -133,15 +131,27 @@ namespace NestingList
                 String spc = System.IO.Path.GetFileName(saveFileDlg.FileName).Replace(".ncad","");
                 String material = PartsList.Items[0].SubItems[5].Text;
                 String thick = PartsList.Items[0].SubItems[3].Text;
+                String grain = "0";
+                String rotate = "ang";
+
+                if (chkGrain.Checked)
+                {
+                    grain = "1";
+                    rotate = "grain";
+                }
 
                 String xml = $@"<?xml version='1.0' encoding='UTF-8'?>
                 <update version='1.0'>
                   <params>
                     <param name='refOrder' value='{spc}' />
                     <param name='refProduct' value='{material}' />
+                    <param name='bLeft' value='10' />
+                    <param name='bRight' value='10' />
+                    <param name='bBottom' value='10' />
+                    <param name='bTop' value='10' />
                   </params>
                   <sheets>
-                    <sheet en='1' name='Sheet_1' diml='2800' dimh='2070' dims='{thick}' items='100' type='0' grain='0' />
+                    <sheet en='1' name='Sheet_1' diml='2800' dimh='2070' dims='{thick}' items='100' type='0' grain='{grain}' />
                   </sheets>
                   <rows>
                   </rows>
@@ -158,6 +168,7 @@ namespace NestingList
                         new XAttribute("dimh", item.SubItems[2].Text),
                         new XAttribute("dims", item.SubItems[3].Text),
                         new XAttribute("items", item.SubItems[4].Text),
+                        new XAttribute(rotate, "1"),
                         new XAttribute("material", item.SubItems[5].Text)
                     );
                     rows.Add(row);
