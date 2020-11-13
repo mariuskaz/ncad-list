@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -109,13 +110,39 @@ namespace NestingList
             }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void btnOpen_Click(object sender, EventArgs e)
         {
-            if (PartsList.SelectedIndices.Count > 0)
+            OpenFileDialog openFileDlg = new OpenFileDialog();
+            openFileDlg.InitialDirectory = "c:\\tpacad\\nestcad\\";
+            openFileDlg.Title = "Pasirinkite";
+            openFileDlg.Filter = "Nesting TpaCAD (*.ncad)|*.ncad";
+            openFileDlg.FilterIndex = 0;
+            openFileDlg.RestoreDirectory = true;
+
+            if (openFileDlg.ShowDialog() == DialogResult.OK)
             {
-                foreach (int item in PartsList.SelectedIndices)
+                string selectedFileName = openFileDlg.FileName;
+                PartsList.Items.Clear();
+                MainForm.ActiveForm.Text = "Nesting List - " + selectedFileName;
+
+                var xml = XDocument.Load(selectedFileName);
+                var items = xml.Descendants("row");
+                foreach (var item in items)
                 {
-                    PartsList.Items.RemoveAt(PartsList.SelectedIndices[0]);
+                    string name = item.Attribute("name").Value;
+                    string height = item.Attribute("dimh").Value;
+                    string length = item.Attribute("diml").Value;
+                    string thick = item.Attribute("dims").Value;
+                    string qty = item.Attribute("items").Value;
+                    string material = "Generic";
+                    if (item.Attribute("material") != null)
+                    {
+                        material = item.Attribute("material").Value;
+                    }
+                    
+                    var row = new ListViewItem(new[] { name, length, height, thick, qty, material });
+                    PartsList.Items.Add(row);
+
                 }
             }
         }
@@ -134,7 +161,8 @@ namespace NestingList
                 String grain = "0";
                 String rotate = "ang";
 
-                if (chkGrain.Checked)
+                DialogResult dialogResult = MessageBox.Show("  Ar medžiaga su tekstūra?", "Material Grain", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                if (dialogResult == DialogResult.Yes)
                 {
                     grain = "1";
                     rotate = "grain";
@@ -178,8 +206,9 @@ namespace NestingList
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void btnDone_Click(object sender, EventArgs e)
         {
+            Process.Start("c:\\tpacad\\bin\\tpacad.exe");
             this.Close();
         }
 

@@ -37,10 +37,9 @@
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnImport = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnOpen = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.chkGrain = new System.Windows.Forms.CheckBox();
+            this.btnDone = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // PartsList
@@ -104,20 +103,20 @@
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(80, 28);
             this.btnImport.TabIndex = 1;
-            this.btnImport.Text = "Import...";
+            this.btnImport.Text = "Import";
             this.btnImport.UseVisualStyleBackColor = true;
             this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
-            // btnDelete
+            // btnOpen
             // 
-            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnDelete.Location = new System.Drawing.Point(98, 530);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(80, 28);
-            this.btnDelete.TabIndex = 6;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.btnOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnOpen.Location = new System.Drawing.Point(98, 530);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(80, 28);
+            this.btnOpen.TabIndex = 6;
+            this.btnOpen.Text = "Open";
+            this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // btnSave
             // 
@@ -130,43 +129,31 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // btnCancel
+            // btnDone
             // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(918, 530);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(80, 28);
-            this.btnCancel.TabIndex = 8;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // chkGrain
-            // 
-            this.chkGrain.AutoSize = true;
-            this.chkGrain.Location = new System.Drawing.Point(683, 530);
-            this.chkGrain.Name = "chkGrain";
-            this.chkGrain.Size = new System.Drawing.Size(124, 17);
-            this.chkGrain.TabIndex = 9;
-            this.chkGrain.Text = "Material grain texture";
-            this.chkGrain.UseVisualStyleBackColor = true;
+            this.btnDone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDone.Location = new System.Drawing.Point(918, 530);
+            this.btnDone.Name = "btnDone";
+            this.btnDone.Size = new System.Drawing.Size(80, 28);
+            this.btnDone.TabIndex = 8;
+            this.btnDone.Text = "Cancel";
+            this.btnDone.UseVisualStyleBackColor = true;
+            this.btnDone.Click += new System.EventHandler(this.btnDone_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 573);
-            this.Controls.Add(this.chkGrain);
-            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnDone);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.btnOpen);
             this.Controls.Add(this.btnImport);
             this.Controls.Add(this.PartsList);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "Nesting List - New project";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -174,7 +161,7 @@
 
         private System.Windows.Forms.ListView PartsList;
         private System.Windows.Forms.Button btnImport;
-        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnOpen;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
@@ -182,8 +169,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.CheckBox chkGrain;
+        private System.Windows.Forms.Button btnDone;
     }
 }
 
