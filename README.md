@@ -1,2 +1,2 @@
 # TpaCAD nesting list
-Import/Export TpaCAD nesting files.
+Merge TpaCAD nesting files.
