@@ -21,6 +21,8 @@ namespace NestingList
             InitializeComponent();
         }
 
+        private string fileName;
+
         public static DialogResult InputBox(string title, string promptText, ref string value)
         {
             Form form = new Form();
@@ -68,10 +70,8 @@ namespace NestingList
         {
             OpenFileDialog openFileDlg = new OpenFileDialog();
             openFileDlg.InitialDirectory = "c:\\tpacad\\nestcad\\";
-            openFileDlg.Title = "Pasirinkite";
+            openFileDlg.Title = "Importas";
             openFileDlg.Filter = "Nesting TpaCAD (*.ncad)|*.ncad";
-            openFileDlg.FilterIndex = 0;
-            openFileDlg.RestoreDirectory = true;
 
             if (openFileDlg.ShowDialog() == DialogResult.OK)
             {
@@ -114,18 +114,15 @@ namespace NestingList
         {
             OpenFileDialog openFileDlg = new OpenFileDialog();
             openFileDlg.InitialDirectory = "c:\\tpacad\\nestcad\\";
-            openFileDlg.Title = "Pasirinkite";
             openFileDlg.Filter = "Nesting TpaCAD (*.ncad)|*.ncad";
-            openFileDlg.FilterIndex = 0;
-            openFileDlg.RestoreDirectory = true;
 
             if (openFileDlg.ShowDialog() == DialogResult.OK)
             {
-                string selectedFileName = openFileDlg.FileName;
+                fileName = openFileDlg.SafeFileName;
                 PartsList.Items.Clear();
-                MainForm.ActiveForm.Text = "Nesting List - " + selectedFileName;
+                MainForm.ActiveForm.Text = "Nesting List - " + openFileDlg.FileName;
 
-                var xml = XDocument.Load(selectedFileName);
+                var xml = XDocument.Load(openFileDlg.FileName);
                 var items = xml.Descendants("row");
                 foreach (var item in items)
                 {
@@ -151,6 +148,7 @@ namespace NestingList
         {
             SaveFileDialog saveFileDlg = new SaveFileDialog();
             saveFileDlg.Filter = "Nesting TpaCAD (*.ncad)|*.ncad";
+            saveFileDlg.FileName = fileName;
 
             if (saveFileDlg.ShowDialog() == DialogResult.OK)
             {
