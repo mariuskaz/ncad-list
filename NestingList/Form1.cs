@@ -201,6 +201,7 @@ namespace NestingList
                 }
                 doc.Save(saveFileDlg.FileName);
                 MainForm.ActiveForm.Text = "Nesting List - " + saveFileDlg.FileName;
+                fileName = System.IO.Path.GetFileName(saveFileDlg.FileName);
             }
         }
 
