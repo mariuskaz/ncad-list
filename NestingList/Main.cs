@@ -159,7 +159,7 @@ namespace NestingList
                 String grain = "0";
                 String rotate = "ang";
 
-                DialogResult dialogResult = MessageBox.Show("  Ar medžiaga su tekstūra?", "Material Grain", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                DialogResult dialogResult = MessageBox.Show("  Ar medžiaga su tekstūra?", "Material Grain", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                 if (dialogResult == DialogResult.Yes)
                 {
                     grain = "1";
