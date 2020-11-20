@@ -222,9 +222,22 @@ namespace NestingList
             }
         }
 
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            if (PartsList.SelectedIndices.Count > 0)
+            {
+                foreach (int item in PartsList.SelectedIndices)
+                {
+                    PartsList.Items.RemoveAt(PartsList.SelectedIndices[0]);
+                }
+            }
+        }
+
         private void PartsList_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             //Console.WriteLine("column" + e.Column.ToString());
         }
+
+
     }
 }
