@@ -200,12 +200,15 @@ namespace NestingList
                     rows.Add(row);
                     if (item.SubItems[5].Text != material) material = "";
                 }
-                
-                var product = from item in doc.Descendants("param")
-                                where item.Attribute("name").Value == "refProduct"
-                                    select item;
 
-                product.ElementAt(0).Attribute("value").Value = material;
+                if (material == "")
+                {
+                    var product = (from param in doc.Descendants("param")
+                                   where param.Attribute("name").Value == "refProduct"
+                                   select param).FirstOrDefault();
+
+                    product.SetAttributeValue("value", "");
+                }
 
                 doc.Save(saveFileDlg.FileName);
                 MainForm.ActiveForm.Text = "Nesting List - " + saveFileDlg.FileName;
