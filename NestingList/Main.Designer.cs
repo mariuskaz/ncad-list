@@ -70,7 +70,7 @@
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "Part number";
+            this.columnHeader1.Text = "File name";
             this.columnHeader1.Width = 300;
             // 
             // columnHeader2
@@ -126,7 +126,7 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(80, 28);
             this.btnSave.TabIndex = 7;
-            this.btnSave.Text = "Save As...";
+            this.btnSave.Text = "Save as...";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 

@@ -197,8 +197,8 @@ namespace NestingList
                         new XAttribute(rotate, "1"),
                         new XAttribute("material", item.SubItems[5].Text)
                     );
+                    if (row.Attribute("material").Value != material) material = "";
                     rows.Add(row);
-                    if (item.SubItems[5].Text != material) material = "";
                 }
 
                 if (material == "")
