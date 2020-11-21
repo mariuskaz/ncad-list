@@ -198,7 +198,15 @@ namespace NestingList
                         new XAttribute("material", item.SubItems[5].Text)
                     );
                     rows.Add(row);
+                    if (item.SubItems[5].Text != material) material = "";
                 }
+                
+                var product = from item in doc.Descendants("param")
+                                where item.Attribute("name").Value == "refProduct"
+                                    select item;
+
+                product.ElementAt(0).Attribute("value").Value = material;
+
                 doc.Save(saveFileDlg.FileName);
                 MainForm.ActiveForm.Text = "Nesting List - " + saveFileDlg.FileName;
                 fileName = System.IO.Path.GetFileName(saveFileDlg.FileName);
