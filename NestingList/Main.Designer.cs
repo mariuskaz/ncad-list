@@ -95,7 +95,7 @@
             // columnHeader6
             // 
             this.columnHeader6.Text = "Material";
-            this.columnHeader6.Width = 360;
+            this.columnHeader6.Width = 365;
             // 
             // btnImport
             // 

@@ -69,7 +69,7 @@ namespace NestingList
         private void btnImport_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDlg = new OpenFileDialog();
-            openFileDlg.InitialDirectory = "c:\\tpacad\\nestcad\\";
+            openFileDlg.InitialDirectory = "c:\\tpacad\\product\\nestcad\\";
             openFileDlg.Title = "Importas";
             openFileDlg.Filter = "Nesting TpaCAD (*.ncad)|*.ncad";
 
@@ -113,7 +113,7 @@ namespace NestingList
         private void btnOpen_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDlg = new OpenFileDialog();
-            openFileDlg.InitialDirectory = "c:\\tpacad\\nestcad\\";
+            openFileDlg.InitialDirectory = "c:\\tpacad\\product\\nestcad\\";
             openFileDlg.Filter = "Nesting TpaCAD (*.ncad)|*.ncad";
 
             if (openFileDlg.ShowDialog() == DialogResult.OK)
@@ -156,15 +156,10 @@ namespace NestingList
                 String spc = System.IO.Path.GetFileName(saveFileDlg.FileName).Replace(".ncad","");
                 String material = PartsList.Items[0].SubItems[5].Text;
                 String thick = PartsList.Items[0].SubItems[3].Text;
-                String grain = "0";
-                String rotate = "ang";
+                int grain = 0;
 
                 DialogResult dialogResult = MessageBox.Show("  Ar medžiaga su tekstūra?", "Material Grain", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    grain = "1";
-                    rotate = "grain";
-                }
+                if (dialogResult == DialogResult.Yes) grain = 1;
 
                 String xml = $@"<?xml version='1.0' encoding='UTF-8'?>
                 <update version='1.0'>
@@ -177,7 +172,7 @@ namespace NestingList
                     <param name='bTop' value='10' />
                   </params>
                   <sheets>
-                    <sheet en='1' name='Sheet_1' diml='2800' dimh='2070' dims='{thick}' items='100' type='0' grain='{grain}' />
+                    <sheet en='1' name='Sheet_1' diml='2070' dimh='2800' dims='{thick}' items='100' type='0' grain='{grain + grain * grain}' />
                   </sheets>
                   <rows>
                   </rows>
@@ -194,7 +189,8 @@ namespace NestingList
                         new XAttribute("dimh", item.SubItems[2].Text),
                         new XAttribute("dims", item.SubItems[3].Text),
                         new XAttribute("items", item.SubItems[4].Text),
-                        new XAttribute(rotate, "1"),
+                        new XAttribute("ang", "1"),
+                        new XAttribute("grain", grain.ToString()),
                         new XAttribute("material", item.SubItems[5].Text)
                     );
                     if (row.Attribute("material").Value != material) material = "";
