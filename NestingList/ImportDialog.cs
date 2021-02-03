@@ -28,6 +28,7 @@ namespace NestingList
 
         private void ImportDialog_Load(object sender, EventArgs e)
         {
+            PalletNo.Text = palletNo;
             ItemQty.SelectAll();
         }
     }

@@ -41,6 +41,7 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnDone = new System.Windows.Forms.Button();
             this.btnRemove = new System.Windows.Forms.Button();
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // PartsList
@@ -55,7 +56,8 @@
             this.columnHeader3,
             this.columnHeader4,
             this.columnHeader5,
-            this.columnHeader6});
+            this.columnHeader6,
+            this.columnHeader7});
             this.PartsList.FullRowSelect = true;
             this.PartsList.GridLines = true;
             this.PartsList.HideSelection = false;
@@ -95,7 +97,7 @@
             // columnHeader6
             // 
             this.columnHeader6.Text = "Material";
-            this.columnHeader6.Width = 365;
+            this.columnHeader6.Width = 305;
             // 
             // btnImport
             // 
@@ -152,6 +154,10 @@
             this.btnRemove.UseVisualStyleBackColor = true;
             this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "Pallet No";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -184,6 +190,7 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnDone;
         private System.Windows.Forms.Button btnRemove;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
     }
 }
 

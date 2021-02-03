@@ -22,6 +22,7 @@ namespace NestingList
         }
 
         private string fileName;
+        public string palette = "P1";
 
         private void btnImport_Click(object sender, EventArgs e)
         {
@@ -34,10 +35,10 @@ namespace NestingList
             {
                 string selectedFileName = openFileDlg.FileName;
                 ImportDialog input = new ImportDialog();
+                input.palletNo = palette;
 
                 if (input.ShowDialog() == DialogResult.OK)
                 {
-
                     var xml = XDocument.Load(selectedFileName);
                     var items = xml.Descendants("row");
                     foreach (var item in items)
@@ -58,7 +59,9 @@ namespace NestingList
                         int multiply = input.qty;
                         qty = qty * multiply;
 
-                        var row = new ListViewItem(new[] { name, length, height, thick, qty.ToString(), material });
+                        palette = input.palletNo;
+
+                        var row = new ListViewItem(new[] { name, length, height, thick, qty.ToString(), material, palette });
                         PartsList.Items.Add(row);
 
                     }
@@ -87,13 +90,20 @@ namespace NestingList
                     string length = item.Attribute("diml").Value;
                     string thick = item.Attribute("dims").Value;
                     string qty = item.Attribute("items").Value;
+
                     string material = "Generic";
                     if (item.Attribute("material") != null)
                     {
                         material = item.Attribute("material").Value;
                     }
-                    
-                    var row = new ListViewItem(new[] { name, length, height, thick, qty, material });
+
+                    string pallet = "";
+                    if (item.Attribute("refRow") != null)
+                    {
+                        pallet = item.Attribute("refRow").Value;
+                    }
+
+                    var row = new ListViewItem(new[] { name, length, height, thick, qty, material, pallet });
                     PartsList.Items.Add(row);
 
                 }
@@ -147,7 +157,8 @@ namespace NestingList
                         new XAttribute("items", item.SubItems[4].Text),
                         new XAttribute("ang", "1"),
                         new XAttribute("grain", grain.ToString()),
-                        new XAttribute("material", item.SubItems[5].Text)
+                        new XAttribute("material", item.SubItems[5].Text),
+                        new XAttribute("refRow", item.SubItems[6].Text)
                     );
                     if (row.Attribute("material").Value != material) material = "";
                     rows.Add(row);
