@@ -23,61 +23,19 @@ namespace NestingList
 
         private string fileName;
 
-        public static DialogResult InputBox(string title, string promptText, ref string value)
-        {
-            Form form = new Form();
-            Label label = new Label();
-            TextBox textBox = new TextBox();
-            Button buttonOk = new Button();
-            Button buttonCancel = new Button();
-
-            form.Text = title;
-            label.Text = promptText;
-            textBox.Text = value;
-
-            buttonOk.Text = "OK";
-            buttonCancel.Text = "Cancel";
-            buttonOk.DialogResult = DialogResult.OK;
-            buttonCancel.DialogResult = DialogResult.Cancel;
-
-            label.SetBounds(9, 15, 332, 13);
-            textBox.SetBounds(12, 31, 332, 36);
-            buttonOk.SetBounds(188, 72, 75, 28);
-            buttonCancel.SetBounds(269, 72, 75, 28);
-
-            label.AutoSize = true;
-            textBox.Anchor = textBox.Anchor | AnchorStyles.Right;
-            buttonOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-
-            form.ClientSize = new Size(356, 115);
-            form.Controls.AddRange(new Control[] { label, textBox, buttonOk, buttonCancel });
-            form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
-            form.FormBorderStyle = FormBorderStyle.FixedDialog;
-            form.StartPosition = FormStartPosition.CenterScreen;
-            form.MinimizeBox = false;
-            form.MaximizeBox = false;
-            form.AcceptButton = buttonOk;
-            form.CancelButton = buttonCancel;
-            textBox.SelectAll();
-
-            DialogResult dialogResult = form.ShowDialog();
-            value = textBox.Text;
-            return dialogResult;
-        }
-
         private void btnImport_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDlg = new OpenFileDialog();
             openFileDlg.InitialDirectory = "c:\\tpacad\\product\\nestcad\\";
-            openFileDlg.Title = "Importas";
+            openFileDlg.Title = "Import";
             openFileDlg.Filter = "Nesting TpaCAD (*.ncad)|*.ncad";
 
             if (openFileDlg.ShowDialog() == DialogResult.OK)
             {
                 string selectedFileName = openFileDlg.FileName;
-                string value = "1";
-                if (InputBox("Multiply", "Quantity:", ref value) == DialogResult.OK)
+                ImportDialog input = new ImportDialog();
+
+                if (input.ShowDialog() == DialogResult.OK)
                 {
 
                     var xml = XDocument.Load(selectedFileName);
@@ -97,9 +55,7 @@ namespace NestingList
                         int qty = 1;
                         Int32.TryParse(item.Attribute("items").Value, out qty);
 
-                        int multiply = 1;
-                        Int32.TryParse(value, out multiply);
-
+                        int multiply = input.qty;
                         qty = qty * multiply;
 
                         var row = new ListViewItem(new[] { name, length, height, thick, qty.ToString(), material });

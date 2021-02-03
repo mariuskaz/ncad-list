@@ -137,7 +137,7 @@
             this.btnDone.Name = "btnDone";
             this.btnDone.Size = new System.Drawing.Size(80, 28);
             this.btnDone.TabIndex = 8;
-            this.btnDone.Text = "Close";
+            this.btnDone.Text = "Optimize";
             this.btnDone.UseVisualStyleBackColor = true;
             this.btnDone.Click += new System.EventHandler(this.btnDone_Click);
             // 
