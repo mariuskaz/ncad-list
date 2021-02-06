@@ -61,7 +61,7 @@
             // 
             // ItemQty
             // 
-            this.ItemQty.Location = new System.Drawing.Point(74, 20);
+            this.ItemQty.Location = new System.Drawing.Point(219, 20);
             this.ItemQty.Name = "ItemQty";
             this.ItemQty.Size = new System.Drawing.Size(62, 20);
             this.ItemQty.TabIndex = 1;
@@ -73,22 +73,22 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 13);
+            this.label1.Size = new System.Drawing.Size(53, 13);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Quantity:";
+            this.label1.Text = "Pallet No:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(157, 23);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 13);
+            this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 9;
-            this.label3.Text = "Pallet No:";
+            this.label3.Text = "Quantity:";
             // 
             // PalletNo
             // 
-            this.PalletNo.Location = new System.Drawing.Point(219, 20);
+            this.PalletNo.Location = new System.Drawing.Point(74, 20);
             this.PalletNo.Name = "PalletNo";
             this.PalletNo.Size = new System.Drawing.Size(62, 20);
             this.PalletNo.TabIndex = 2;
